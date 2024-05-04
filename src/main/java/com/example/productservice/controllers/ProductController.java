@@ -1,5 +1,7 @@
 package com.example.productservice.controllers;
 
+import com.example.productservice.dtos.FakeStoreProductDto;
+import com.example.productservice.dtos.GenericProductDto;
 import com.example.productservice.service.FakeStoreProductService;
 import com.example.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +25,7 @@ public class ProductController {
 
     //localhost:8080/products/123
     @GetMapping("/{id}")
-    public String getProductById(@PathVariable("id") Long id){
-        //call the FakeStoreProductService getProductById() method
-        //return "Scaler || product with id: " + id;
+    public GenericProductDto getProductById(@PathVariable("id") Long id){
         return productService.getProductById(id);
     }
     @GetMapping()
