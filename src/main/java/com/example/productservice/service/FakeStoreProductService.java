@@ -15,8 +15,8 @@ import java.util.List;
 public class FakeStoreProductService implements ProductService{
     private RestTemplateBuilder restTemplateBuilder;
 
-    private String getProductUrl = "https://fakestoreapi.com/products/{id}";
-    private String getAllProductsUrl = "https://fakestoreapi.com/products";
+    private String specificProductUrl = "https://fakestoreapi.com/products/{id}";
+    private String genericProductsUrl = "https://fakestoreapi.com/products";
 
     private static GenericProductDto convertToGenericProductDto(FakeStoreProductDto fakeStoreProductDto){
         GenericProductDto genericProductDto = new GenericProductDto();
@@ -37,7 +37,7 @@ public class FakeStoreProductService implements ProductService{
         //integrate the FakeStore API
         //RestTemplate
         RestTemplate restTemplate = restTemplateBuilder.build();
-        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity(getProductUrl, FakeStoreProductDto.class, id);
+        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity(specificProductUrl, FakeStoreProductDto.class, id);
         //Convert FakeStoreProductDto to GenericProductDto before returning
         return convertToGenericProductDto(responseEntity.getBody());
     }
@@ -46,7 +46,7 @@ public class FakeStoreProductService implements ProductService{
     public List<GenericProductDto> getAllProducts() {
         RestTemplate restTemplate = restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto[]> responseEntity =
-                restTemplate.getForEntity(getAllProductsUrl, FakeStoreProductDto[].class);
+                restTemplate.getForEntity(genericProductsUrl, FakeStoreProductDto[].class);
 
         //ArrayList<Integer> => ArrayList.class -> Erasure
 
@@ -65,8 +65,13 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public void createProducts() {
+    public GenericProductDto createProducts(GenericProductDto genericProductDto) {
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductDto> responseEntity =
+                restTemplate.postForEntity(genericProductsUrl, genericProductDto, FakeStoreProductDto.class);
 
+        //GenericProductDto genericProductDto1= convertToGenericProductDto(responseEntity.getBody());
+         return convertToGenericProductDto(responseEntity.getBody());
     }
 
     @Override

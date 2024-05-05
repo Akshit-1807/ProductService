@@ -38,8 +38,9 @@ public class ProductController {
     public void deleteProductById(){
 
     }
-    public void createProduct(){
-
+    @PostMapping
+    public GenericProductDto createProduct(@RequestBody GenericProductDto genericProductDto){
+        return productService.createProducts(genericProductDto);
     }
     public void updateProductById(){
 
