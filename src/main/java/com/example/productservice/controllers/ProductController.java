@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/products")
 public class ProductController {
@@ -29,8 +31,8 @@ public class ProductController {
         return productService.getProductById(id);
     }
     @GetMapping()
-    public void getAllProducts(){
-
+    public List<GenericProductDto> getAllProducts(){
+        return productService.getAllProducts();
     }
     @DeleteMapping("{id}")
     public void deleteProductById(){

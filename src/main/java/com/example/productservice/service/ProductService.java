@@ -4,9 +4,11 @@ import com.example.productservice.dtos.FakeStoreProductDto;
 import com.example.productservice.dtos.GenericProductDto;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 public interface ProductService {
     GenericProductDto getProductById(Long id);
-    void getAllProducts();
+    List<GenericProductDto> getAllProducts();
     void deleteProductsById();
     void createProducts();
     void updateProductById();
